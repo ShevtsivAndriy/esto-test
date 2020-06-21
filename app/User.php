@@ -52,4 +52,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Transactions::class);
     }
+
+    /**
+     * @return mixed
+     */
+    public function getSumAttribute()
+    {
+        return $this->transactions()
+            ->debit()
+            ->sum('amount');
+    }
 }

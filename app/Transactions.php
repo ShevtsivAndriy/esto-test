@@ -24,4 +24,13 @@ class Transactions extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * @param $query
+     * @return mixed
+     */
+    public function scopeDebit($query)
+    {
+        return $query->where('type', '=', 'debit');
+    }
 }
