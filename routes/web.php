@@ -16,5 +16,11 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/transactions', 'HomeController@transactionShow')->name('transactions');
-Route::post('/transactions', 'HomeController@transactionPost');
+
+Route::group([
+    'middleware' => ['isAdmin'],
+    'prefix' => '/transactions'
+], function () {
+    Route::get('/', 'HomeController@transactionShow')->name('transactions');
+    Route::post('/', 'HomeController@transactionPost');
+});
