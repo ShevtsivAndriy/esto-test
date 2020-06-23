@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\User;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -19,6 +20,32 @@ class RegisterTest extends TestCase
         'password_confirmation' =>  'password'
     ];
     public static $ROUTE = '/register';
+
+    /** @test */
+    public function users_table_exist()
+    {
+        $this->assertTrue(
+            Schema::hasTable('users')
+        );
+    }
+
+    /** @test */
+    public function users_table_has_expected_columns()
+    {
+        $this->assertTrue(
+            Schema::hasColumns('users', [
+                'id',
+                'name',
+                'email',
+                'password',
+                'remember_token',
+                'permissions',
+                'deleted_at',
+                'created_at',
+                'updated_at'
+            ])
+        );
+    }
 
     /** @test */
     public function a_user_can_be_created()
